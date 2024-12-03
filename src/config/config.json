@@ -1,0 +1,28 @@
+{
+  "development": {
+    "username": "sa",
+    "password": "12345678",
+    "database": "ChindaPOS",
+    "host": "localhost",
+    "dialect": "mssql",
+    "dialectOptions": {
+      "encrypt": true,
+      "trustServerCertificate": true
+    },
+    "port": 1433
+  },
+  "test": {
+    "username": "sa",
+    "password": "12345678",
+    "database": "ChindaPOS",
+    "host": "ANDERSON-KIOLE",
+    "dialect": "mssql"
+  },
+  "production": {
+    "username": "sa",
+    "password": "12345678",
+    "database": "ChindaPOS",
+    "host": "ANDERSON-KIOLE",
+    "dialect": "mssql"
+  }
+}
