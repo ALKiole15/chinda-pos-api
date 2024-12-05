@@ -1,4 +1,4 @@
-const CreateArtigo_UseCase = require('../../domain/usecases/CreateArtigo_UseCase');
+const CreateArtigo_UseCase = require('../../application/usecases/CreateArtigo_UseCase');
 const ArtigoRepository = require('../../infrastructure/repositories/ArtigoRepository');
 
 const repo = new ArtigoRepository();

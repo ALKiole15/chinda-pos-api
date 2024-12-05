@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model Artigo {
+  artigo     String @id
+  descricao  String
+  unidade    String
+  familia    String?
+  familias   Familia? @relation(fields: [familia], references: [familia], onUpdate: NoAction, onDelete: NoAction) 
+  subfamilias Subfamilia? @relation(fields: [subfamilia, familia], references: [subfamilia, familia], onUpdate: NoAction)
+  subfamilia String?
+  stkMin     Int
+  createdAt  DateTime @default(now())
+}
+
+model Familia{
+    familia String @id
+    descricao String
+    artigos Artigo[]
+    subfamilias Subfamilia[]
+}
+
+model Subfamilia{
+    subfamilia String 
+    descricao String 
+    familia String
+    familias Familia @relation(fields: [familia], references: [familia])
+    artigos Artigo[]
+
+    @@id([subfamilia, familia])
+}
