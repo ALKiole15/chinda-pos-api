@@ -1,7 +1,7 @@
 import { ArtigoGateway } from "../gateways/ArtigoGateway";
 import { Artigo } from "../../domain/entities/Artigo";
 
-export class CreateArtigo_UseCase {
+export class CreateArtigoUseCase {
   constructor(private artigoRepository: ArtigoGateway) {}
 
   async execute(artigo: Artigo): Promise<Artigo> {
