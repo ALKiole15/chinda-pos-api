@@ -1,6 +1,6 @@
 import { Artigo } from "../../domain/entities/Artigo";
 
 export interface ArtigoGateway {
-  save(user: Partial<Artigo>): Promise<Artigo>;
+  save({artigo, descricao}): Promise<Artigo>;
   getByCodigo(artigo: string): Promise<Artigo | null>;
 }

@@ -7,9 +7,8 @@ export class Artigo {
       public unidade: string,
       public stkMin: number,
       public createdAt: Date,
-      public familia?: string,
-      public familias?: Familia,
-      public subfamilia?: string,
+      public familia?: string | null,
+      public subfamilia?: string | null,
     ) {}
   }
   
