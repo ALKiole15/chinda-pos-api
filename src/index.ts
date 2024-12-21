@@ -1,6 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
-import { userRoutes } from "./src/web/express/routes/artigoRoutes.ts";
+import { userRoutes } from "./web/express/routes/artigoRoutes.js";
 
 const app = express();
 app.use(bodyParser.json());

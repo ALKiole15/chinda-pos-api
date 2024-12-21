@@ -1,0 +1,147 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Familia {
+  id        String @id @default(uuid())
+  descricao String
+
+  artigo     Artigo[]
+  subfamilia Subfamilia[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Subfamilia {
+  id        String @id @default(uuid())
+  descricao String
+
+  familia   Familia @relation(fields: [familiaId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  familiaId String
+  artigo    Artigo  @relation(fields: [artigoId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  artigoId  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Artigo {
+  id        String  @id @default(uuid())
+  codigo    String @unique
+  descricao String
+  unidade   String
+  preco     Preco[]
+  familia   Familia @relation(fields: [familiaId], references: [id])
+  familiaId String
+
+  linhaFactura LinhaFactura[]
+  subfamilia   Subfamilia[]
+  imposto      Iva[]
+  stkMin       Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Iva {
+  id        String @id @default(uuid())
+  descricao String
+  taxa      Float
+
+  artigo   Artigo @relation(fields: [artigoId], references: [id])
+  artigoId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Preco {
+  id      String @id @default(uuid())
+  preco_1 Float
+  preco_2 Float?
+  preco_3 Float?
+  preco_4 Float?
+
+  unidade   Unidade @relation(fields: [unidadeId], references: [id])
+  unidadeId String
+
+  artigo    Artigo   @relation(fields: [artigoId], references: [id])
+  artigoId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Unidade {
+  id        String @id @default(uuid())
+  descricao String
+
+  preco Preco[]
+
+  createdAt  DateTime @default(now())
+  upadatedAt DateTime @updatedAt
+}
+
+model LinhaFactura {
+  id         String @id @default(uuid())
+  quantidade Int
+  preco      Float
+
+  factura   Factura @relation(fields: [facturaId], references: [id])
+  facturaId String
+  artigo    Artigo  @relation(fields: [artigoId], references: [id])
+  artigoId  String
+
+  createdAt DateTime @default(now())
+}
+
+model Factura {
+  id     String   @id @default(uuid())
+  data   DateTime
+  estado String?
+  total  Float
+
+  cliente       Cliente     @relation(fields: [clienteId], references: [id])
+  clienteId     String
+  tipoFactura   TipoFactura @relation(fields: [tipoFacturaId], references: [id])
+  tipoFacturaId String
+
+  linhaFactura LinhaFactura[]
+  hash         String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TipoFactura {
+  id        String @id @default(uuid())
+  descricao String
+
+  factura Factura[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Cliente {
+  id       String @id @default(uuid())
+  nome     String
+  morada   String
+  telefone String
+  email    String
+  nif      String
+
+  factura   Factura[]
+  createdAt DateTime  @default(now())
+}

@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - chinda-pos-data:/var/lib/postgresql/data/pgdata/
+    environment:
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: chindapos
+      POSTGRES_USER: chindaposadmin
+      PGDATA: /var/lib/postgresql/data/pgdata/
+volumes:
+  chinda-pos-data:

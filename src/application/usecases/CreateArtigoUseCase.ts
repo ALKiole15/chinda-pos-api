@@ -6,7 +6,7 @@ export class CreateArtigoUseCase {
 
   async execute(artigo: Artigo): Promise<Artigo> {
 
-    const existingArtigo = await this.artigoRepository.getByCodigo(artigo.artigo);
+    const existingArtigo = await this.artigoRepository.getByCodigo(artigo.codigo);
 
     if (existingArtigo) {
       throw new Error("O Artigo já existe");
